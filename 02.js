@@ -53,74 +53,73 @@ const p1 = new Promise(function(resolve, reject) { // 1. 创建 Promise 承诺�
 //     })
 
 // 再改变写法，如下：
-p1
-    .then(function(data) {
-        console.log(data.toString()) // hello aaa
-
-        // return 一个 Promise 对象的时候才有意义
-        return new Promise((resolve, reject) => {
-            resolve(123)
-        })
-
-        // 说明：return 123 // 返回 123、abc 没啥意义
-    })
-    .then(function(data) { // 它就是上一个 then 里面 return 的 Promise 中的 resolve 方法
-        // 如果上面的resolve()方法不调用，后面的then方法就不执行了。这是规定
-        console.log(data) //123
-        return "b"
-    })
-    .then(function(data) {
-        console.log(data) // b
-    })
-
-
-
-
 // p1
 //     .then(function(data) {
 //         console.log(data.toString()) // hello aaa
 
 //         // return 一个 Promise 对象的时候才有意义
 //         return new Promise((resolve, reject) => {
-//             setTimeout(function() {
-//                 resolve()
-//             }, 2000)
+//             resolve(123)
 //         })
 
-//         // return 123 // 返回 123、abc 没啥意义
+//         // 说明：return 123 // 返回 123、abc 没啥意义
 //     })
 //     .then(function(data) { // 它就是上一个 then 里面 return 的 Promise 中的 resolve 方法
 //         // 如果上面的resolve()方法不调用，后面的then方法就不执行了。这是规定
-//         // fs.readFile
-//         return new Promise((resolve, reject) => {
-//             fs.readFile('./data/b.txt', (err, data) => {
-//                 if (err) {
-//                     reject(err)
-//                 } else {
-//                     resolve(data)
-//                 }
-//             })
-//         })
+//         console.log(data) //123
+//         return "b"
 //     })
 //     .then(function(data) {
-//         console.log(data.toString())
-//         return new Promise((resolve, reject) => {
-//             setTimeout(function() {
-//                 resolve()
-//             }, 3000)
-//         })
+//         console.log(data) // b
 //     })
-//     .then(function() {
-//         return new Promise((resolve, reject) => {
-//             fs.readFile('./data/c.txt', (err, data) => {
-//                 if (err) {
-//                     reject(err)
-//                 } else {
-//                     resolve(data)
-//                 }
-//             })
-//         })
-//     })
-//     .then(function(data) { // 简单理解，每一个 then 就是上一个 then 的回调
-//         console.log(data)
-//     })
+
+
+// 需求：实现读a文件、2秒读b文件、3秒读c文件，优化写法，如下：
+p1
+    .then(function(data) {
+        console.log(data.toString()) // hello aaa
+
+        // return 一个 Promise 对象的时候才有意义
+        return new Promise((resolve, reject) => {
+            setTimeout(function() {
+                resolve()
+            }, 2000)
+        })
+
+        // return 123 // 返回 123、abc 没啥意义
+    })
+    .then(function(data) { // 它就是上一个 then 里面 return 的 Promise 中的 resolve 方法
+        // 如果上面的resolve()方法不调用，后面的then方法就不执行了。这是规定
+        // fs.readFile
+        return new Promise((resolve, reject) => {
+            fs.readFile('./data/b.txt', (err, data) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(data)
+                }
+            })
+        })
+    })
+    .then(function(data) {
+        console.log(data.toString())
+        return new Promise((resolve, reject) => {
+            setTimeout(function() {
+                resolve()
+            }, 3000)
+        })
+    })
+    .then(function() {
+        return new Promise((resolve, reject) => {
+            fs.readFile('./data/c.txt', (err, data) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(data)
+                }
+            })
+        })
+    })
+    .then(function(data) { // 简单理解，每一个 then 就是上一个 then 的回调
+        console.log(data.toString())
+    })
