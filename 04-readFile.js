@@ -22,10 +22,10 @@ function readFile(filePath) { // 根据需要定义参数
 }
 
 // 测试一个使用Promise封装的一个读文件的方法
-// readFile('./data/a.txt')
-//     .then(function(data) {
-//         console.log(data.toString()); // hello aaa
-//     })
+readFile('./data/a.txt')
+    .then(function(data) {
+        console.log(data.toString()); // hello aaa
+    })
 
 // 封装的一个Promise版的定时器
 function sleep(time) {

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Promise封装的ajax</title>
+</head>
+
+<body>
+    <script>
+        // 如何使用XMLHttpRequest发送请求 https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest
+        // function reqListener() {
+        //     console.log(this.responseText);
+        // }
+
+        // var oReq = new XMLHttpRequest();
+        // oReq.addEventListener("load", reqListener); // 响应成功会触发 load 事件
+        // oReq.open("GET", "http://www.example.org/example.txt");
+        // oReq.send();
+
+
+        // 以下是通过Promise封装的ajax
+        ajax({
+                url: './data/json/a.json',
+                method: 'GET'
+            })
+            .then(function(data) {
+                console.log(data)
+                return ajax({
+                    url: './data/json/b.json',
+                    method: 'GET'
+                })
+            })
+            .then(function(data) {
+                console.log(data)
+                return ajax({
+                    url: './data/json/c.json',
+                    method: 'GET'
+                })
+            })
+            .then(function(data) {
+                console.log(data)
+            })
+
+        function ajax(options) { // options = { url，method... }
+            const p = new Promise((resolve, reject) => {
+                var oReq = new XMLHttpRequest()
+                oReq.addEventListener("load", function() { // 响应成功会触发 load 事件
+                    resolve(JSON.parse(oReq.responseText)) //把响应的结果转成json对象
+                })
+                oReq.open(options.method, options.url)
+                oReq.send()
+            })
+            return p
+        }
+    </script>
+</body>
+
+</html>
