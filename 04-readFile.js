@@ -7,6 +7,12 @@ function readFile(filePath) { // 根据需要定义参数
         // 3. 执行异步操作（定时器、读文件、写文件、ajax 请求、....）
         fs.readFile(filePath, (err, data) => {
             // 4. 成功 resolve，失败 reject
+            //   if (err) {
+            //     reject(err) // 失败调用 reject，把错误对象传递给它
+            // } else {
+            //     resolve(data) // 成功调用 resolve，如果有结果就把结果传递给它
+            // }
+            // 使用三元表达式简化代码
             err ? reject(err) : resolve(data)
         })
     })
