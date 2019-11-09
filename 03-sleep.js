@@ -23,6 +23,7 @@ function sleep(time) {
 }
 
 
+// 说明：如果上面我们不使用sleep封装，等1秒执行、等2秒执行。就形成了回调地狱的问题。
 // setTimeout(function () {
 //   setTimeout(function () {
 //     setTimeout(function () {
