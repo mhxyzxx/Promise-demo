@@ -123,3 +123,7 @@ p1
     .then(function(data) { // 简单理解，每一个 then 就是上一个 then 的回调
         console.log(data.toString())
     })
+
+// # 我们新建了一个Promise容器，里面是一个回调函数，在回调函数中接收两个参数(resolve, reject)，并在回调函数中执行了一个异步任务(可以是定时器，读、写文件，ajax请求等)，成功调用resolve(data),失败调reject(data)并把异步请求的结果传到这两个回调函数里。
+// # 使用一个变量接收Promise对象，可以通过.then的方式，无限的.then下去。由这个结论，我们可以在每个.then方法回调中return一个结果。经分析可知：下一then得到结果是上一个then方法return的结果。但我们在上一个then方法中直接return一个简单的结果是没有意义的。我们可以在上一个then方法中return一个Promise对象，下一个then方法中接收到resolve()方法返回的结果。简单理解，每一个 then 就是上一个 then 的回调。
+// # 如果在第一个then方法中返回的Promise对象中，不调用resolve(data)方法，从第二个then方法开始都是不会被执行的。
