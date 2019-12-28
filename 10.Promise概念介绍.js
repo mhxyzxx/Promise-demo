@@ -49,7 +49,7 @@ function getFileByPath(fpath) {
   return promise
 }
 
-getFileByPath('./files/2.txt')
+getFileByPath('./data/a.txt')
   .then(function (data) {
     console.log(data + '-------')
   }, function (err) {
